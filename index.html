@@ -140,6 +140,7 @@
         <h2 class="card-title">คอร์สพื้นฐานการเขียนเว็บ</h2>
         <p class="card-text">เริ่มต้นเรียนรู้ HTML, CSS และ JS ตั้งแต่ศูนย์จนเป็นมือโปร พร้อมโปรเจกต์ทำจริง</p>
         <button class="btn-signup" onclick="welcome(this)">สมัครเรียนเลย</button>
+        <p class="message-text"></p>
     </div>
 </div>
 
@@ -150,7 +151,7 @@
         <h2 class="card-title">คอร์สพื้นฐานการเขียนเว็บ</h2>
         <p class="card-text">เริ่มต้นเรียนรู้ HTML, CSS และ JS ตั้งแต่ศูนย์จนเป็นมือโปร พร้อมโปรเจกต์ทำจริง</p>
         <button class="btn-signup" onclick="welcome(this)">สมัครเรียนเลย</button>
-        <p id="message"></p>
+        <p class="message-text"></p>
     </div>    
     </div>
     <div class="card"> 
@@ -159,7 +160,7 @@
         <h2 class="card-title">คอร์สพื้นฐานการเขียนเว็บ</h2>
         <p class="card-text">เริ่มต้นเรียนรู้ HTML, CSS และ JS ตั้งแต่ศูนย์จนเป็นมือโปร พร้อมโปรเจกต์ทำจริง</p>
         <button class="btn-signup" onclick="welcome(this)">สมัครเรียนเลย</button>
-        <p id="message"></p>
+        <p class="message-text"></p>
     </div>
  </div>
     <div class="card">     <img src="images/logo.png" alt="Course Thumbnail" class="card-img">
@@ -167,7 +168,7 @@
         <h2 class="card-title">คอร์สพื้นฐานการเขียนเว็บ</h2>
         <p class="card-text">เริ่มต้นเรียนรู้ HTML, CSS และ JS ตั้งแต่ศูนย์จนเป็นมือโปร พร้อมโปรเจกต์ทำจริง</p>
         <button class="btn-signup" onclick="welcome(this)">สมัครเรียนเลย</button>
-        <p id="message"></p>
+        <p class="message-text"></p>
     </div>
  </div> 
 </div>
@@ -176,12 +177,19 @@
 function welcome(theButton) { // รับปุ่มที่กดมาในชื่อ theButton
         let courseName = "คอร์สพื้นฐานการเขียนเว็บ";
         
-        // 1. แสดงข้อความ (ตรงนี้ยังใช้ ID เดิมได้ถ้ามีอันเดียว)
-        document.getElementById('message').innerText = "คุณเลือกคอร์สนี้แล้ว!";
-        
-        // 2. เปลี่ยนสีและข้อความเฉพาะ "ปุ่มที่ถูกกด"
-        theButton.style.backgroundColor = '#2ecc71';
-        theButton.innerText = 'กำลังไป...';
+// 1. หา "กล่องเนื้อหา" (card-content) ที่ปุ่มนี้สังกัดอยู่
+    let cardContent = theButton.parentElement; 
+    
+    // 2. ค้นหาคลาส .message-text เฉพาะที่อยู่ในกล่องนี้เท่านั้น
+    let displayMessage = cardContent.querySelector('.message-text');
+    
+    // 3. แสดงข้อความ
+    displayMessage.innerText = "คุณเลือกคอร์สนี้แล้ว!";
+    displayMessage.style.color = "#2ecc71";
+    
+    // 4. เปลี่ยนสีปุ่มที่กด
+    theButton.style.backgroundColor = '#2ecc71';
+    theButton.innerText = 'กำลังไป...';
     }
 </script>
 </body>
