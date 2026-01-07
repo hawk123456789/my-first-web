@@ -184,22 +184,40 @@
     <button class="btn-signup" id="evasiveButton" onmouseover="evadeMouse(this)">Click สิวะ</button>
     <img src="images/discord_icon_130958.png" alt="Girl in a jacket" width="30" height="30">
     <div id="admin-panel"
-        style="background: #e1f5fe; padding: 20px; border-radius: 15px; margin-bottom: 30px; border: 2px dashed #03a9f4; width: 100%; max-width: 600px;">
-        <h3 style="color: #0288d1; margin-bottom: 10px;">🛠️ Admin Mode: เพิ่มคอร์สใหม่</h3>
-        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+        style="background: white; padding: 25px; border-radius: 20px; margin-bottom: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); width: 100%; max-width: 850px; border: 1px solid #eee;">
+        <h3 style="color: #2c3e50; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
+            <span
+                style="background: #3498db; color: white; padding: 5px 10px; border-radius: 8px; font-size: 14px;">ADMIN</span>
+            จัดการคอร์สเรียน
+        </h3>
+
+        <div style="display: flex; gap: 15px; flex-wrap: wrap;">
             <input type="text" id="new-title" placeholder="ชื่อคอร์ส"
-                style="flex: 1; padding: 10px; border-radius: 5px; border: 1px solid #ccc;">
-            <input type="text" id="new-desc" placeholder="รายละเอียดสั้นๆ"
-                style="flex: 2; padding: 10px; border-radius: 5px; border: 1px solid #ccc;">
-            <button onclick="addNewCourse()"
-                style="padding: 10px 20px; background: #03a9f4; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">+
-                เพิ่มคอร์ส</button>
+                style="flex: 1; min-width: 200px; padding: 12px; border-radius: 10px; border: 1px solid #ddd; outline: none;">
+            <input type="text" id="new-desc" placeholder="คำอธิบายสั้นๆ"
+                style="flex: 2; min-width: 300px; padding: 12px; border-radius: 10px; border: 1px solid #ddd; outline: none;">
+
+            <div style="display: flex; width: 100%; gap: 15px; margin-top: 5px; align-items: flex-end;">
+                <div style="flex: 1; display: flex; flex-direction: column;">
+                    <label for="new-image"
+                        style="font-size: 12px; color: #7f8c8d; margin-bottom: 5px;">อัปโหลดรูปภาพจากเครื่อง:</label>
+                    <input type="file" id="new-image" accept="image/*"
+                        style="padding: 8px; border-radius: 10px; border: 1px solid #ddd; background: #f9f9f9; font-size: 12px;">
+                </div>
+                <button onclick="addNewCourse()"
+                    style="padding: 12px 30px; background: #3498db; color: white; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; height: 45px;">+
+                    เพิ่มคอร์สใหม่</button>
+                <button onclick="clearSystem()"
+                    style="padding: 12px 15px; background: #95a5a6; color: white; border: none; border-radius: 10px; cursor: pointer; font-size: 12px; height: 45px;">ล้างระบบ</button>
+            </div>
         </div>
     </div>
     <div style="text-align: center; margin: 20px;">
         <input type="text" id="search-input" placeholder="ค้นหาคอร์สเรียน..."
             style="padding: 10px; width: 300px; border-radius: 5px; border: 1px solid #ddd;">
     </div>
+
+    <div class="container" id="course-container"></div>
     <div class="container">
         <div class="card">
             <img src="images/logo.png" alt="Course Thumbnail" class="card-img">
@@ -238,22 +256,52 @@
             const container = document.getElementById('course-container');
             container.innerHTML = '';
 
-            // เพิ่ม index เข้าไปใน forEach เพื่อให้รู้ว่าตัวไหนลำดับที่เท่าไหร่
-            data.forEach((course, index) => {
+            data.forEach((course) => {
                 container.innerHTML += `
-            <div class="card">
+            <div class="card" id="card-${course.title.replace(/\s+/g, '-')}">
                 <img src="${course.image}" class="card-img">
                 <div class="card-content">
                     <h2 class="card-title">${course.title}</h2>
                     <p class="card-text">${course.description}</p>
-                    <div style="display: flex; gap: 10px; justify-content: center;">
-                        <button class="btn-signup" style="margin-top:0; flex: 1;" onclick="welcome(this)">สมัครเรียน</button>
-<button onclick="deleteCourse('${course.title}')" style="padding: 5px 15px; background: #e74c3c; color: white; border: none; border-radius: 50px; cursor: pointer; font-size: 12px;">ลบ</button>                    </div>
+                    
+                    <div style="display: flex; gap: 5px; justify-content: center; margin-top: 15px;">
+                        <button class="btn-signup" style="margin:0; flex: 2; padding: 10px;" onclick="welcome(this)">สมัครเรียน</button>
+                        <button onclick="editCourse('${course.title}')" style="padding: 5px 10px; background: #f1c40f; color: white; border: none; border-radius: 5px; cursor: pointer;">แก้ไข</button>
+                        <button onclick="deleteCourse('${course.title}')" style="padding: 5px 10px; background: #e74c3c; color: white; border: none; border-radius: 5px; cursor: pointer;">ลบ</button>
+                    </div>
                     <p class="message-text" style="margin-top:10px;"></p>
                 </div>
             </div>
         `;
             });
+        }
+        function clearSystem() {
+            if (confirm("ต้องการลบข้อมูลทั้งหมดและกลับไปเป็นค่าเริ่มต้นใช่ไหม?")) {
+                localStorage.removeItem('webHawkCourses');
+                location.reload(); // รีโหลดหน้าเว็บเพื่อให้กลับไปใช้ค่า Default ใน Code
+            }
+        }
+        function editCourse(oldTitle) {
+            // 1. หาตำแหน่งของคอร์สที่ต้องการแก้ไข
+            const index = courses.findIndex(c => c.title === oldTitle);
+
+            if (index !== -1) {
+                // 2. ถามข้อมูลใหม่จาก User (ใช้ Prompt ง่ายๆ ก่อน)
+                const newTitle = prompt("แก้ไขชื่อคอร์ส:", courses[index].title);
+                const newDesc = prompt("แก้ไขรายละเอียด:", courses[index].description);
+
+                // 3. ตรวจสอบว่า User ไม่ได้กดยกเลิก และไม่ได้ปล่อยว่าง
+                if (newTitle && newDesc) {
+                    // 4. อัปเดตข้อมูลใน Array
+                    courses[index].title = newTitle;
+                    courses[index].description = newDesc;
+
+                    // 5. บันทึกและวาดหน้าจอใหม่
+                    saveToLocalStorage();
+                    renderCourses(courses);
+                    alert("แก้ไขข้อมูลเรียบร้อยแล้ว!");
+                }
+            }
         }
 
         // 3. ฟังก์ชันตรวจสอบฟอร์ม (Form Validation) - เช็คตรงนี้เลย!
@@ -288,35 +336,53 @@
             }
         }
         function addNewCourse() {
-            // 1. ดึงค่าจากช่อง Input ของ Admin
             const titleInput = document.getElementById('new-title');
             const descInput = document.getElementById('new-desc');
+            const imageInput = document.getElementById('new-image'); // ตัวเลือกไฟล์
 
-            // ตรวจสอบว่ากรอกข้อมูลครบไหม
             if (titleInput.value.trim() === "" || descInput.value.trim() === "") {
-                alert("กรุณากรอกข้อมูลคอร์สให้ครบถ้วนก่อนครับ");
+                alert("กรุณากรอกชื่อและรายละเอียดคอร์ส");
                 return;
             }
 
-            // 2. สร้าง Object คอร์สใหม่
-            const newCourse = {
-                title: titleInput.value,
-                description: descInput.value,
-                image: "images/logo.png" // ใช้รูป Default ไปก่อน
-            };
+            const file = imageInput.files[0]; // ดึงไฟล์ที่เลือกออกมา
 
-            // 3. ใส่ข้อมูลใหม่เข้าไปใน Array 'courses' (ตัวแปรหลักของเรา)
-            courses.push(newCourse);
-            saveToLocalStorage();
-            // 4. สั่งให้วาดหน้าจอใหม่ (Re-render) เพื่อโชว์ Card ที่เพิ่งเพิ่ม
-            renderCourses(courses);
+            if (file) {
+                // --- กรณีอัปโหลดรูปจากเครื่อง ---
+                const reader = new FileReader();
+                reader.onloadend = function () {
+                    const base64String = reader.result; // นี่คือรูปภาพที่กลายเป็นข้อความแล้ว
 
-            // 5. ล้างค่าในช่อง Input ให้พร้อมพิมพ์คอร์สถัดไป
-            titleInput.value = '';
-            descInput.value = '';
+                    const newCourse = {
+                        title: titleInput.value,
+                        description: descInput.value,
+                        image: base64String
+                    };
 
-            console.log("คอร์สล่าสุดที่เพิ่ม:", newCourse);
-            console.log("จำนวนคอร์สทั้งหมดตอนนี้:", courses.length);
+                    finalizeAddCourse(newCourse);
+                }
+                reader.readAsDataURL(file); // สั่งให้เริ่มแปลงไฟล์
+            } else {
+                // --- กรณีไม่ได้เลือกรูป ให้ใช้รูป Default ---
+                const newCourse = {
+                    title: titleInput.value,
+                    description: descInput.value,
+                    image: "images/logo.png"
+                };
+                finalizeAddCourse(newCourse);
+            }
+
+            // ฟังก์ชันช่วยบันทึกข้อมูล (เพื่อไม่ให้เขียนโค้ดซ้ำ)
+            function finalizeAddCourse(course) {
+                courses.push(course);
+                saveToLocalStorage();
+                renderCourses(courses);
+
+                // ล้างค่าฟอร์ม
+                titleInput.value = '';
+                descInput.value = '';
+                imageInput.value = '';
+            }
         }
         function deleteCourse(courseTitle) {
             if (confirm(`คุณแน่ใจนะว่าจะลบ "${courseTitle}"?`)) {
