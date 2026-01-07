@@ -1,202 +1,311 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
         * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box; /* ช่วยให้คำนวณขนาด Padding/Border ไม่ให้กล่องบวม */
-    }
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            /* ช่วยให้คำนวณขนาด Padding/Border ไม่ให้กล่องบวม */
+        }
 
-    /* นี่คือพื้นที่เขียน CSS */
-    body {
-        background-color: #f4f4f4; /* เปลี่ยนสีพื้นหลังเว็บ */
-        font-family: sans-serif;    /* เปลี่ยนฟอนต์ให้ดูทันสมัยขึ้น */
-        display: flex;
-        flex-direction: column;
-        align-items: center;       /* จัดทุกอย่างให้อยู่กึ่งกลางหน้าจอ */
-        padding: 50px;
-    }
+        /* นี่คือพื้นที่เขียน CSS */
+        body {
+            background-color: #f4f4f4;
+            /* เปลี่ยนสีพื้นหลังเว็บ */
+            font-family: sans-serif;
+            /* เปลี่ยนฟอนต์ให้ดูทันสมัยขึ้น */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            /* จัดทุกอย่างให้อยู่กึ่งกลางหน้าจอ */
+            padding: 50px;
+        }
 
-    h1 {
-        color: #2c3e50;            /* เปลี่ยนสีหัวข้อ */
-        border-bottom: 3px solid #3498db; /* ใส่เส้นใต้เท่ๆ */
-    }
+        h1 {
+            color: #2c3e50;
+            /* เปลี่ยนสีหัวข้อ */
+            border-bottom: 3px solid #3498db;
+            /* ใส่เส้นใต้เท่ๆ */
+        }
 
-    img {
-        border-radius: 20px;       /* ทำมุมรูปให้มน (เหมือนใน Elementor) */
-        box-shadow: 0 10px 20px rgba(0,0,0,0.1); /* ใส่เงาให้รูปดูมีมิติ */
-        margin-top: 20px;
-    }
-    .btn-signup {
-    /* 1. พื้นฐาน: สีและขนาด */
-    background-color: #ff4757; /* สีแดงส้มสะดุดตา */
-    color: white;              /* สีตัวอักษร */
-    padding: 15px 30px;        /* ระยะห่างข้างใน (บน-ล่าง 15px, ซ้าย-ขวา 30px) */
-    font-size: 18px;           /* ขนาดตัวอักษร */
-    font-weight: bold;         /* ตัวหนา */
-    border: none;              /* เอาเส้นขอบเดิมๆ ออก */
-    border-radius: 50px;       /* ทำเป็นปุ่มทรงมน (Pill Shape) */
-    cursor: pointer;           /* เปลี่ยนเมาส์เป็นรูปมือเวลาชี้ */
-    /* 2. เพิ่มความละมุน */
-    transition: all 0.3s ease; /* ทำให้เวลาขยับดู Smooth ไม่กระตุก */
-    box-shadow: 0 4px 15px rgba(255, 71, 87, 0.3); /* เงาสีเดียวกับปุ่ม */
-    margin-top: 30px;
-    }
+        img {
+            border-radius: 20px;
+            /* ทำมุมรูปให้มน (เหมือนใน Elementor) */
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            /* ใส่เงาให้รูปดูมีมิติ */
+            margin-top: 20px;
+        }
 
-    /* 3. เอฟเฟกต์เวลาเอาเมาส์ไปชี้ (Hover) */
-    .btn-signup:hover {
-    background-color: #ff6b81; /* สว่างขึ้นนิดหน่อย */
-    transform: translateY(-3px); /* ลอยขึ้นข้างบน 3px */
-    box-shadow: 0 8px 20px rgba(255, 71, 87, 0.5); /* เงาเข้มขึ้น */
-    }
+        .btn-signup {
+            /* 1. พื้นฐาน: สีและขนาด */
+            background-color: #ff4757;
+            /* สีแดงส้มสะดุดตา */
+            color: white;
+            /* สีตัวอักษร */
+            padding: 15px 30px;
+            /* ระยะห่างข้างใน (บน-ล่าง 15px, ซ้าย-ขวา 30px) */
+            font-size: 18px;
+            /* ขนาดตัวอักษร */
+            font-weight: bold;
+            /* ตัวหนา */
+            border: none;
+            /* เอาเส้นขอบเดิมๆ ออก */
+            border-radius: 50px;
+            /* ทำเป็นปุ่มทรงมน (Pill Shape) */
+            cursor: pointer;
+            /* เปลี่ยนเมาส์เป็นรูปมือเวลาชี้ */
+            /* 2. เพิ่มความละมุน */
+            transition: all 0.3s ease;
+            /* ทำให้เวลาขยับดู Smooth ไม่กระตุก */
+            box-shadow: 0 4px 15px rgba(255, 71, 87, 0.3);
+            /* เงาสีเดียวกับปุ่ม */
+            margin-top: 30px;
+        }
 
-    /* 4. เอฟเฟกต์เวลากด (Active) */
-    .btn-signup:active {
-        transform: translateY(-1px); /* ยุบตัวลงเล็กน้อยเวลาคลิก */
-}   
-/* ตกแต่งกล่อง Card */
-.card {
-    width: 350px;           /* กำหนดความกว้างของกล่อง */
-    background-color: white;
-    border-radius: 20px;    /* มุมมน */
-    overflow: hidden;       /* สำคัญมาก! เพื่อให้รูปที่อยู่ข้างในโค้งตามมุมกล่อง */
-    box-shadow: 0 15px 35px rgba(0,0,0,0.1); /* ใส่เงาฟุ้งๆ */
-    transition: transform 0.3s ease;
-    margin: 20px;
-}
+        /* 3. เอฟเฟกต์เวลาเอาเมาส์ไปชี้ (Hover) */
+        .btn-signup:hover {
+            background-color: #ff6b81;
+            /* สว่างขึ้นนิดหน่อย */
+            transform: translateY(-3px);
+            /* ลอยขึ้นข้างบน 3px */
+            box-shadow: 0 8px 20px rgba(255, 71, 87, 0.5);
+            /* เงาเข้มขึ้น */
+        }
 
-.card:hover {
-    transform: scale(1.02); /* เวลาเมาส์ชี้ ให้กล่องขยายขึ้นนิดหน่อย */
-}
+        /* 4. เอฟเฟกต์เวลากด (Active) */
+        .btn-signup:active {
+            transform: translateY(-1px);
+            /* ยุบตัวลงเล็กน้อยเวลาคลิก */
+        }
 
-/* ตกแต่งรูปภาพใน Card */
-.card-img {
-    width: 100%;
-    height: auto;
-    display: block; /* แก้ปัญหาช่องว่างปริศนารอบรูปได้ชะงัด */
-}
-.card .card-img{ 
-    margin-top: 0; /* เจาะจงว่าถ้าเป็นรูปใน card ให้ margin เป็น 0 */
-}
+        /* ตกแต่งกล่อง Card */
+        .card {
+            width: 350px;
+            /* กำหนดความกว้างของกล่อง */
+            background-color: white;
+            border-radius: 20px;
+            /* มุมมน */
+            overflow: hidden;
+            /* สำคัญมาก! เพื่อให้รูปที่อยู่ข้างในโค้งตามมุมกล่อง */
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            /* ใส่เงาฟุ้งๆ */
+            transition: transform 0.3s ease;
+            margin: 20px;
+        }
 
-/* ตกแต่งส่วนเนื้อหาด้านใน */
-.card-content {
-    padding: 20px;          /* เว้นระยะห่างจากขอบกล่องด้านใน */
-    text-align: center;
-}
+        .card:hover {
+            transform: scale(1.02);
+            /* เวลาเมาส์ชี้ ให้กล่องขยายขึ้นนิดหน่อย */
+        }
 
-.card-title {
-    font-size: 22px;
-    color: #2c3e50;
-    margin: 0 0 10px 0;    /* เว้นระยะห่างด้านล่างหัวข้อ */
-}
+        /* ตกแต่งรูปภาพใน Card */
+        .card-img {
+            width: 100%;
+            height: auto;
+            display: block;
+            /* แก้ปัญหาช่องว่างปริศนารอบรูปได้ชะงัด */
+        }
 
-.card-text {
-    font-size: 15px;
-    color: #7f8c8d;        /* สีเทาให้อ่านง่ายขึ้น */
-    line-height: 1.6;      /* ระยะห่างระหว่างบรรทัด */
-    margin-bottom: 20px;
-}
-    .card img {
-        border-radius: 20px;       /* ทำมุมรูปให้มน (เหมือนใน Elementor) */
-        box-shadow: 0 10px 20px rgba(0,0,0,0.1); /* ใส่เงาให้รูปดูมีมิติ */
-        margin-top: 20px;
-    }
-    
-.container {
-    display: flex;         /* เปิดโหมดจัดแถว */
-    flex-wrap: wrap;       /* ถ้าจอแคบให้ขึ้นบรรทัดใหม่ (Responsive) */
-    justify-content: center; /* จัดให้อยู่กลางจอ */
-    gap: 20px;            /* เว้นระยะห่างระหว่าง Card (เหมือน Gutter ใน Grid) */
-    padding: 40px;
-}
-/* เมื่อหน้าจอมีความกว้างน้อยกว่า 768px (ขนาด Tablet/Mobile) */
-@media (max-width: 768px) {
-    .container {
-        flex-direction: column; /* เปลี่ยนจากเรียงแถวนอน เป็นแนวตั้ง */
-        align-items: center;    /* จัดให้ Card อยู่กลางจอ */
-    }
+        .card .card-img {
+            margin-top: 0;
+            /* เจาะจงว่าถ้าเป็นรูปใน card ให้ margin เป็น 0 */
+        }
 
-    .card {
-        width: 90%;             /* ให้ Card กว้างเกือบเต็มหน้าจอมือถือ */
-        max-width: 400px;       /* แต่ไม่ให้ใหญ่เกินไป */
-    }
-}
-</style>
+        /* ตกแต่งส่วนเนื้อหาด้านใน */
+        .card-content {
+            padding: 20px;
+            /* เว้นระยะห่างจากขอบกล่องด้านใน */
+            text-align: center;
+        }
+
+        .card-title {
+            font-size: 22px;
+            color: #2c3e50;
+            margin: 0 0 10px 0;
+            /* เว้นระยะห่างด้านล่างหัวข้อ */
+        }
+
+        .card-text {
+            font-size: 15px;
+            color: #7f8c8d;
+            /* สีเทาให้อ่านง่ายขึ้น */
+            line-height: 1.6;
+            /* ระยะห่างระหว่างบรรทัด */
+            margin-bottom: 20px;
+        }
+
+        .card img {
+            border-radius: 20px;
+            /* ทำมุมรูปให้มน (เหมือนใน Elementor) */
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            /* ใส่เงาให้รูปดูมีมิติ */
+            margin-top: 20px;
+        }
+
+        .container {
+            display: flex;
+            /* เปิดโหมดจัดแถว */
+            flex-wrap: wrap;
+            /* ถ้าจอแคบให้ขึ้นบรรทัดใหม่ (Responsive) */
+            justify-content: center;
+            /* จัดให้อยู่กลางจอ */
+            gap: 20px;
+            /* เว้นระยะห่างระหว่าง Card (เหมือน Gutter ใน Grid) */
+            padding: 40px;
+        }
+
+        /* เมื่อหน้าจอมีความกว้างน้อยกว่า 768px (ขนาด Tablet/Mobile) */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                /* เปลี่ยนจากเรียงแถวนอน เป็นแนวตั้ง */
+                align-items: center;
+                /* จัดให้ Card อยู่กลางจอ */
+            }
+
+            .card {
+                width: 90%;
+                /* ให้ Card กว้างเกือบเต็มหน้าจอมือถือ */
+                max-width: 400px;
+                /* แต่ไม่ให้ใหญ่เกินไป */
+            }
+        }
+    </style>
 </head>
+
 <body>
     <h1>Web-Hawk</h1>
     <p>Welcome na Bro</p>
     <button class="btn-signup" id="evasiveButton" onmouseover="evadeMouse(this)">Click สิวะ</button>
     <img src="images/discord_icon_130958.png" alt="Girl in a jacket" width="30" height="30">
-
-<div class="container">
-    <div class="card"> 
-        <img src="images/logo.png" alt="Course Thumbnail" class="card-img">
-    <div class="card-content">
-        <h2 class="card-title">Luna Online</h2>
-        <p class="card-text">เริ่มต้นเรียนรู้ HTML, CSS และ JS ตั้งแต่ศูนย์จนเป็นมือโปร พร้อมโปรเจกต์ทำจริง</p>
-        <button class="btn-signup" onclick="welcome(this)">สมัครเรียนเลย</button>
-        <p class="message-text"></p>
-    </div>    
+    <div style="text-align: center; margin: 20px;">
+        <input type="text" id="search-input" placeholder="ค้นหาคอร์สเรียน..."
+            style="padding: 10px; width: 300px; border-radius: 5px; border: 1px solid #ddd;">
     </div>
-    <div class="card"> 
+    <div class="container">
+        <div class="card">
             <img src="images/logo.png" alt="Course Thumbnail" class="card-img">
-    <div class="card-content">
-        <h2 class="card-title">LunaPlus</h2>
-        <p class="card-text">เริ่มต้นเรียนรู้ HTML, CSS และ JS ตั้งแต่ศูนย์จนเป็นมือโปร พร้อมโปรเจกต์ทำจริง</p>
-        <button class="btn-signup" onclick="welcome(this)">สมัครเรียนเลย</button>
-        <p class="message-text"></p>
+            <div class="card-content">
+                <h2 class="card-title">Luna Online</h2>
+                <p class="card-text">เริ่มต้นเรียนรู้ HTML, CSS และ JS ตั้งแต่ศูนย์จนเป็นมือโปร พร้อมโปรเจกต์ทำจริง</p>
+                <button class="btn-signup" onclick="welcome(this)">สมัครเรียนเลย</button>
+                <p class="message-text"></p>
+            </div>
+        </div>
+        <div class="container" id="course-container">
+        </div>
     </div>
- </div>
-    <div class="card">     <img src="images/logo.png" alt="Course Thumbnail" class="card-img">
-    <div class="card-content">
-        <h2 class="card-title">Valorant</h2>
-        <p class="card-text">เริ่มต้นเรียนรู้ HTML, CSS และ JS ตั้งแต่ศูนย์จนเป็นมือโปร พร้อมโปรเจกต์ทำจริง</p>
-        <button class="btn-signup" onclick="welcome(this)">สมัครเรียนเลย</button>
-        <p class="message-text"></p>
-    </div>
- </div> 
-</div>
+
 <script>
-    // นี่คือฟังก์ชัน (คำสั่ง) ที่เราตั้งชื่อว่า welcome
-function welcome(theButton) { // รับปุ่มที่กดมาในชื่อ theButton
-        let courseName = "คอร์สพื้นฐานการเขียนเว็บ";
-        
-// 1. หา "กล่องเนื้อหา" (card-content) ที่ปุ่มนี้สังกัดอยู่
-    let cardContent = theButton.parentElement; 
-    
-    // 2. ค้นหาคลาส .message-text เฉพาะที่อยู่ในกล่องนี้เท่านั้น
-    let displayMessage = cardContent.querySelector('.message-text');
-    
-    // 3. แสดงข้อความ
-    displayMessage.innerText = "คุณเลือกคอร์สนี้แล้ว!";
-    displayMessage.style.color = "#2ecc71";
-    
-    // 4. เปลี่ยนสีปุ่มที่กด
-    theButton.style.backgroundColor = '#2ecc71';
-    theButton.innerText = 'กำลังไป...';
+    // 1. คลังข้อมูล (Data)
+    const courses = [
+        { title: "Luna Online", description: "เริ่มต้นเรียนรู้ HTML, CSS และ JS ตั้งแต่ศูนย์", image: "images/logo.png" },
+        { title: "คอร์สพื้นฐาน HTML", description: "เรียนรู้วิธีการวางโครงสร้างเว็บไซต์ด้วย HTML5", image: "images/logo.png" },
+        { title: "คอร์สตกแต่งด้วย CSS", description: "เปลี่ยนเว็บจืดๆ ให้สวยงามด้วย CSS3", image: "images/logo.png" },
+        { title: "คอร์ส JavaScript เบื้องต้น", description: "ใส่หัวใจให้เว็บขยับได้ด้วย Logic", image: "images/logo.png" },
+        { title: "คอร์ส Web Admin มือโปร", description: "รวมเทคนิคการจัดการเว็บไซต์", image: "images/logo.png" },
+        { title: "คอร์สการใช้ GitHub", description: "รวมเทคนิคการจัดการ GitHub", image: "images/logo.png" }
+    ];
+
+    // 2. ฟังก์ชันแสดง Card (Render)
+    function renderCourses(data) {
+        const container = document.getElementById('course-container');
+        if (!container) return; 
+        container.innerHTML = '';
+        data.forEach(course => {
+            container.innerHTML += `
+                <div class="card">
+                    <img src="${course.image}" class="card-img">
+                    <div class="card-content">
+                        <h2 class="card-title">${course.title}</h2>
+                        <p class="card-text">${course.description}</p>
+                        <button class="btn-signup" onclick="welcome(this)">สมัครเรียนเลย</button>
+                        <p class="message-text"></p>
+                    </div>
+                </div>`;
+        });
     }
-   function evadeMouse(button) {
-        // จำกัดพื้นที่การขยับ เพื่อไม่ให้ปุ่มหนีไปนอกจอ
-        let screenWidth = window.innerWidth - button.clientWidth;
-        let screenHeight = window.innerHeight - button.clientHeight;
 
-        // สุ่มตำแหน่งใหม่ (X, Y)
-        let newX = Math.random() * screenWidth;
-        let newY = Math.random() * screenHeight;
+    // 3. ฟังก์ชันตรวจสอบฟอร์ม (Form Validation) - เช็คตรงนี้เลย!
+    function submitForm() {
+        const nameValue = document.getElementById('user-name').value;
+        const emailInput = document.getElementById('user-email');
+        const nameError = document.getElementById('name-error');
+        const emailError = document.getElementById('email-error');
 
-        // สั่งให้ปุ่มเปลี่ยนตำแหน่ง
-        button.style.position = 'absolute'; // สำคัญ! ต้องตั้งเป็น absolute เพื่อให้ขยับได้อิสระ
-        // เพิ่มบรรทัดนี้ครับ เพื่อให้ปุ่มอยู่ชั้นบนสุดเสมอ
-    button.style.zIndex = '9999';
-        button.style.left = newX + 'px';
-        button.style.top = newY + 'px';
-    } 
+        let isValid = true;
+
+        // เช็คชื่อ
+        if (nameValue.trim() === "") {
+            nameError.style.display = 'block';
+            isValid = false;
+        } else {
+            nameError.style.display = 'none';
+        }
+
+        // เช็คอีเมล (ต้องมี @)
+        if (!emailInput.value.includes('@')) {
+            emailError.style.display = 'block';
+            isValid = false;
+        } else {
+            emailError.style.display = 'none';
+        }
+
+        if (isValid) {
+            alert("ขอบคุณครับคุณ " + nameValue + " เราได้รับข้อมูลแล้ว!");
+            document.getElementById('user-name').value = '';
+            emailInput.value = '';
+        }
+    }
+
+    // 4. ฟังก์ชันเสริมอื่นๆ
+    function welcome(btn) {
+        const msg = btn.parentElement.querySelector('.message-text');
+        msg.innerText = "เลือกคอร์สแล้ว!";
+        msg.style.color = "#2ecc71";
+        btn.style.backgroundColor = '#2ecc71';
+    }
+
+    function evadeMouse(btn) {
+        const x = Math.random() * (window.innerWidth - btn.clientWidth);
+        const y = Math.random() * (window.innerHeight - btn.clientHeight);
+        btn.style.position = 'absolute';
+        btn.style.left = x + 'px';
+        btn.style.top = y + 'px';
+    }
+
+    // 5. ระบบค้นหา (Search)
+    document.getElementById('search-input').addEventListener('input', (e) => {
+        const term = e.target.value.toLowerCase();
+        const filtered = courses.filter(c => c.title.toLowerCase().includes(term));
+        renderCourses(filtered);
+    });
+
+    // สั่งรันครั้งแรก
+    renderCourses(courses);
 </script>
+    <hr style="margin: 50px 0;">
+    <div id="enrollment-form"
+        style="max-width: 400px; margin: 0 auto; padding: 20px; background: #f9f9f9; border-radius: 10px;">
+        <h3>ลงทะเบียนรับข่าวสารคอร์สใหม่</h3>
+        <div style="margin-bottom: 10px;">
+            <input type="text" id="user-name" placeholder="ชื่อ-นามสกุล"
+                style="width: 100%; padding: 10px; box-sizing: border-box;">
+            <small id="name-error" style="color: red; display: none;">กรุณากรอกชื่อด้วยจ้า</small>
+        </div>
+        <div style="margin-bottom: 10px;">
+            <input type="email" id="user-email" placeholder="อีเมลของคุณ"
+                style="width: 100%; padding: 10px; box-sizing: border-box;">
+            <small id="email-error" style="color: red; display: none;">อีเมลไม่ถูกต้องนะ</small>
+        </div>
+        <button onclick="submitForm()"
+            style="width: 100%; padding: 10px; background: #3498db; color: white; border: none; cursor: pointer; border-radius: 5px;">ส่งข้อมูล</button>
+    </div>
 </body>
+
 </html>
