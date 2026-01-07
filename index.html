@@ -215,32 +215,44 @@
     </div>
 
     <script>
-        // 1. คลังข้อมูล (Data)
-        const courses = [
-            { title: "Luna Online", description: "เริ่มต้นเรียนรู้ HTML, CSS และ JS ตั้งแต่ศูนย์", image: "images/logo.png" },
-            { title: "คอร์สพื้นฐาน HTML", description: "เรียนรู้วิธีการวางโครงสร้างเว็บไซต์ด้วย HTML5", image: "images/logo.png" },
-            { title: "คอร์สตกแต่งด้วย CSS", description: "เปลี่ยนเว็บจืดๆ ให้สวยงามด้วย CSS3", image: "images/logo.png" },
-            { title: "คอร์ส JavaScript เบื้องต้น", description: "ใส่หัวใจให้เว็บขยับได้ด้วย Logic", image: "images/logo.png" },
-            { title: "คอร์ส Web Admin มือโปร", description: "รวมเทคนิคการจัดการเว็บไซต์", image: "images/logo.png" },
-            { title: "คอร์สการใช้ GitHub", description: "รวมเทคนิคการจัดการ GitHub", image: "images/logo.png" }
+        // --- ส่วนการประกาศตัวแปรตอนเริ่มสคริปต์ ---
+
+        // 1. ดึงข้อมูลดิบจากลิ้นชัก (Storage) มาดูก่อน
+        const savedData = localStorage.getItem('webHawkCourses');
+
+        // 2. ประกาศตัวแปร courses โดย "เช็คเงื่อนไข"
+        let courses = savedData ? JSON.parse(savedData) : [
+            // ถ้าไม่มีข้อมูลในลิ้นชัก (เปิดครั้งแรก) ให้ใช้ค่าพวกนี้
+            { title: "Luna Online", description: "เริ่มต้นเรียนรู้ HTML, CSS และ JS", image: "images/logo.png" },
+            { title: "คอร์สพื้นฐาน HTML", description: "เรียนรู้วิธีการวางโครงสร้างเว็บไซต์", image: "images/logo.png" },
+            { title: "คอร์สตกแต่งด้วย CSS", description: "เปลี่ยนเว็บจืดๆ ให้สวยงามด้วย CSS3", image: "images/logo.png" }
         ];
 
+        // 3. สั่งวาดหน้าจอทันที
+        renderCourses(courses);
+        function saveToLocalStorage() {
+            localStorage.setItem('webHawkCourses', JSON.stringify(courses));
+        }
         // 2. ฟังก์ชันแสดง Card (Render)
         function renderCourses(data) {
             const container = document.getElementById('course-container');
-            if (!container) return;
             container.innerHTML = '';
-            data.forEach(course => {
+
+            // เพิ่ม index เข้าไปใน forEach เพื่อให้รู้ว่าตัวไหนลำดับที่เท่าไหร่
+            data.forEach((course, index) => {
                 container.innerHTML += `
-                <div class="card">
-                    <img src="${course.image}" class="card-img">
-                    <div class="card-content">
-                        <h2 class="card-title">${course.title}</h2>
-                        <p class="card-text">${course.description}</p>
-                        <button class="btn-signup" onclick="welcome(this)">สมัครเรียนเลย</button>
-                        <p class="message-text"></p>
-                    </div>
-                </div>`;
+            <div class="card">
+                <img src="${course.image}" class="card-img">
+                <div class="card-content">
+                    <h2 class="card-title">${course.title}</h2>
+                    <p class="card-text">${course.description}</p>
+                    <div style="display: flex; gap: 10px; justify-content: center;">
+                        <button class="btn-signup" style="margin-top:0; flex: 1;" onclick="welcome(this)">สมัครเรียน</button>
+<button onclick="deleteCourse('${course.title}')" style="padding: 5px 15px; background: #e74c3c; color: white; border: none; border-radius: 50px; cursor: pointer; font-size: 12px;">ลบ</button>                    </div>
+                    <p class="message-text" style="margin-top:10px;"></p>
+                </div>
+            </div>
+        `;
             });
         }
 
@@ -295,7 +307,7 @@
 
             // 3. ใส่ข้อมูลใหม่เข้าไปใน Array 'courses' (ตัวแปรหลักของเรา)
             courses.push(newCourse);
-
+            saveToLocalStorage();
             // 4. สั่งให้วาดหน้าจอใหม่ (Re-render) เพื่อโชว์ Card ที่เพิ่งเพิ่ม
             renderCourses(courses);
 
@@ -305,6 +317,21 @@
 
             console.log("คอร์สล่าสุดที่เพิ่ม:", newCourse);
             console.log("จำนวนคอร์สทั้งหมดตอนนี้:", courses.length);
+        }
+        function deleteCourse(courseTitle) {
+            if (confirm(`คุณแน่ใจนะว่าจะลบ "${courseTitle}"?`)) {
+                // หาตำแหน่งของคอร์สที่มี title ตรงกับที่ส่งมา
+                const indexToDelete = courses.findIndex(c => c.title === courseTitle);
+
+                if (indexToDelete !== -1) {
+                    courses.splice(indexToDelete, 1);
+                    saveToLocalStorage();
+                    // สำคัญ: ต้องสั่งให้ Search ทำงานใหม่ หรือ Render ใหม่
+                    const searchTerm = document.getElementById('search-input').value.toLowerCase();
+                    const filtered = courses.filter(c => c.title.toLowerCase().includes(searchTerm));
+                    renderCourses(filtered);
+                }
+            }
         }
         // 4. ฟังก์ชันเสริมอื่นๆ
         function welcome(btn) {
@@ -331,6 +358,20 @@
 
         // สั่งรันครั้งแรก
         renderCourses(courses);
+        // 1. ฟังก์ชันบันทึกข้อมูลลงลิ้นชัก Browser
+        function saveToLocalStorage() {
+            // ต้องแปลง Array เป็น String ก่อนเซฟ (เพราะ LocalStorage เก็บได้แต่ตัวหนังสือ)
+            localStorage.setItem('webHawkCourses', JSON.stringify(courses));
+        }
+
+        // 2. ฟังก์ชันดึงข้อมูลจากลิ้นชักออกมาใช้
+        function loadFromLocalStorage() {
+            const savedData = localStorage.getItem('webHawkCourses');
+            if (savedData) {
+                // ถ้ามีข้อมูลเก่า ให้แปลงจาก String กลับมาเป็น Array แล้วทับค่าเดิม
+                courses = JSON.parse(savedData);
+            }
+        }
     </script>
     <hr style="margin: 50px 0;">
     <div id="enrollment-form"
