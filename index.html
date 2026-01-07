@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* ช่วยให้คำนวณขนาด Padding/Border ไม่ให้กล่องบวม */
+    }
+
+    /* นี่คือพื้นที่เขียน CSS */
+    body {
+        background-color: #f4f4f4; /* เปลี่ยนสีพื้นหลังเว็บ */
+        font-family: sans-serif;    /* เปลี่ยนฟอนต์ให้ดูทันสมัยขึ้น */
+        display: flex;
+        flex-direction: column;
+        align-items: center;       /* จัดทุกอย่างให้อยู่กึ่งกลางหน้าจอ */
+        padding: 50px;
+    }
+
+    h1 {
+        color: #2c3e50;            /* เปลี่ยนสีหัวข้อ */
+        border-bottom: 3px solid #3498db; /* ใส่เส้นใต้เท่ๆ */
+    }
+
+    img {
+        border-radius: 20px;       /* ทำมุมรูปให้มน (เหมือนใน Elementor) */
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1); /* ใส่เงาให้รูปดูมีมิติ */
+        margin-top: 20px;
+    }
+    .btn-signup {
+    /* 1. พื้นฐาน: สีและขนาด */
+    background-color: #ff4757; /* สีแดงส้มสะดุดตา */
+    color: white;              /* สีตัวอักษร */
+    padding: 15px 30px;        /* ระยะห่างข้างใน (บน-ล่าง 15px, ซ้าย-ขวา 30px) */
+    font-size: 18px;           /* ขนาดตัวอักษร */
+    font-weight: bold;         /* ตัวหนา */
+    border: none;              /* เอาเส้นขอบเดิมๆ ออก */
+    border-radius: 50px;       /* ทำเป็นปุ่มทรงมน (Pill Shape) */
+    cursor: pointer;           /* เปลี่ยนเมาส์เป็นรูปมือเวลาชี้ */
+    /* 2. เพิ่มความละมุน */
+    transition: all 0.3s ease; /* ทำให้เวลาขยับดู Smooth ไม่กระตุก */
+    box-shadow: 0 4px 15px rgba(255, 71, 87, 0.3); /* เงาสีเดียวกับปุ่ม */
+    margin-top: 30px;
+    }
+
+    /* 3. เอฟเฟกต์เวลาเอาเมาส์ไปชี้ (Hover) */
+    .btn-signup:hover {
+    background-color: #ff6b81; /* สว่างขึ้นนิดหน่อย */
+    transform: translateY(-3px); /* ลอยขึ้นข้างบน 3px */
+    box-shadow: 0 8px 20px rgba(255, 71, 87, 0.5); /* เงาเข้มขึ้น */
+    }
+
+    /* 4. เอฟเฟกต์เวลากด (Active) */
+    .btn-signup:active {
+        transform: translateY(-1px); /* ยุบตัวลงเล็กน้อยเวลาคลิก */
+}   
+/* ตกแต่งกล่อง Card */
+.card {
+    width: 350px;           /* กำหนดความกว้างของกล่อง */
+    background-color: white;
+    border-radius: 20px;    /* มุมมน */
+    overflow: hidden;       /* สำคัญมาก! เพื่อให้รูปที่อยู่ข้างในโค้งตามมุมกล่อง */
+    box-shadow: 0 15px 35px rgba(0,0,0,0.1); /* ใส่เงาฟุ้งๆ */
+    transition: transform 0.3s ease;
+    margin: 20px;
+}
+
+.card:hover {
+    transform: scale(1.02); /* เวลาเมาส์ชี้ ให้กล่องขยายขึ้นนิดหน่อย */
+}
+
+/* ตกแต่งรูปภาพใน Card */
+.card-img {
+    width: 100%;
+    height: auto;
+    display: block; /* แก้ปัญหาช่องว่างปริศนารอบรูปได้ชะงัด */
+}
+.card .card-img{ 
+    margin-top: 0; /* เจาะจงว่าถ้าเป็นรูปใน card ให้ margin เป็น 0 */
+}
+
+/* ตกแต่งส่วนเนื้อหาด้านใน */
+.card-content {
+    padding: 20px;          /* เว้นระยะห่างจากขอบกล่องด้านใน */
+    text-align: center;
+}
+
+.card-title {
+    font-size: 22px;
+    color: #2c3e50;
+    margin: 0 0 10px 0;    /* เว้นระยะห่างด้านล่างหัวข้อ */
+}
+
+.card-text {
+    font-size: 15px;
+    color: #7f8c8d;        /* สีเทาให้อ่านง่ายขึ้น */
+    line-height: 1.6;      /* ระยะห่างระหว่างบรรทัด */
+    margin-bottom: 20px;
+}
+    .card img {
+        border-radius: 20px;       /* ทำมุมรูปให้มน (เหมือนใน Elementor) */
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1); /* ใส่เงาให้รูปดูมีมิติ */
+        margin-top: 20px;
+    }
+    
+.container {
+    display: flex;         /* เปิดโหมดจัดแถว */
+    flex-wrap: wrap;       /* ถ้าจอแคบให้ขึ้นบรรทัดใหม่ (Responsive) */
+    justify-content: center; /* จัดให้อยู่กลางจอ */
+    gap: 20px;            /* เว้นระยะห่างระหว่าง Card (เหมือน Gutter ใน Grid) */
+    padding: 40px;
+}
+/* เมื่อหน้าจอมีความกว้างน้อยกว่า 768px (ขนาด Tablet/Mobile) */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column; /* เปลี่ยนจากเรียงแถวนอน เป็นแนวตั้ง */
+        align-items: center;    /* จัดให้ Card อยู่กลางจอ */
+    }
+
+    .card {
+        width: 90%;             /* ให้ Card กว้างเกือบเต็มหน้าจอมือถือ */
+        max-width: 400px;       /* แต่ไม่ให้ใหญ่เกินไป */
+    }
+}
+</style>
+</head>
+<body>
+    <h1>Web-Hawk</h1>
+    <p>Welcome na Bro</p>
+    <a href="https://www.google.com" target="_blank"><button class="btn-signup">Click สิวะ</button></a>
+    <img src="images/discord_icon_130958.png" alt="Girl in a jacket" width="30" height="30">
+
+    <div class="card">
+    <img src="images/logo.png" alt="Course Thumbnail" class="card-img">
+    <div class="card-content">
+        <h2 class="card-title">คอร์สพื้นฐานการเขียนเว็บ</h2>
+        <p class="card-text">เริ่มต้นเรียนรู้ HTML, CSS และ JS ตั้งแต่ศูนย์จนเป็นมือโปร พร้อมโปรเจกต์ทำจริง</p>
+        <button class="btn-signup" onclick="welcome(this)">สมัครเรียนเลย</button>
+    </div>
+</div>
+
+<div class="container">
+    <div class="card"> 
+        <img src="images/logo.png" alt="Course Thumbnail" class="card-img">
+    <div class="card-content">
+        <h2 class="card-title">คอร์สพื้นฐานการเขียนเว็บ</h2>
+        <p class="card-text">เริ่มต้นเรียนรู้ HTML, CSS และ JS ตั้งแต่ศูนย์จนเป็นมือโปร พร้อมโปรเจกต์ทำจริง</p>
+        <button class="btn-signup" onclick="welcome(this)">สมัครเรียนเลย</button>
+        <p id="message"></p>
+    </div>    
+    </div>
+    <div class="card"> 
+            <img src="images/logo.png" alt="Course Thumbnail" class="card-img">
+    <div class="card-content">
+        <h2 class="card-title">คอร์สพื้นฐานการเขียนเว็บ</h2>
+        <p class="card-text">เริ่มต้นเรียนรู้ HTML, CSS และ JS ตั้งแต่ศูนย์จนเป็นมือโปร พร้อมโปรเจกต์ทำจริง</p>
+        <button class="btn-signup" onclick="welcome(this)">สมัครเรียนเลย</button>
+        <p id="message"></p>
+    </div>
+ </div>
+    <div class="card">     <img src="images/logo.png" alt="Course Thumbnail" class="card-img">
+    <div class="card-content">
+        <h2 class="card-title">คอร์สพื้นฐานการเขียนเว็บ</h2>
+        <p class="card-text">เริ่มต้นเรียนรู้ HTML, CSS และ JS ตั้งแต่ศูนย์จนเป็นมือโปร พร้อมโปรเจกต์ทำจริง</p>
+        <button class="btn-signup" onclick="welcome(this)">สมัครเรียนเลย</button>
+        <p id="message"></p>
+    </div>
+ </div> 
+</div>
+<script>
+    // นี่คือฟังก์ชัน (คำสั่ง) ที่เราตั้งชื่อว่า welcome
+function welcome(theButton) { // รับปุ่มที่กดมาในชื่อ theButton
+        let courseName = "คอร์สพื้นฐานการเขียนเว็บ";
+        
+        // 1. แสดงข้อความ (ตรงนี้ยังใช้ ID เดิมได้ถ้ามีอันเดียว)
+        document.getElementById('message').innerText = "คุณเลือกคอร์สนี้แล้ว!";
+        
+        // 2. เปลี่ยนสีและข้อความเฉพาะ "ปุ่มที่ถูกกด"
+        theButton.style.backgroundColor = '#2ecc71';
+        theButton.innerText = 'กำลังไป...';
+    }
+</script>
+</body>
+</html>
