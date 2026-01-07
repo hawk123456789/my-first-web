@@ -183,6 +183,19 @@
     <p>Welcome na Bro</p>
     <button class="btn-signup" id="evasiveButton" onmouseover="evadeMouse(this)">Click สิวะ</button>
     <img src="images/discord_icon_130958.png" alt="Girl in a jacket" width="30" height="30">
+    <div id="admin-panel"
+        style="background: #e1f5fe; padding: 20px; border-radius: 15px; margin-bottom: 30px; border: 2px dashed #03a9f4; width: 100%; max-width: 600px;">
+        <h3 style="color: #0288d1; margin-bottom: 10px;">🛠️ Admin Mode: เพิ่มคอร์สใหม่</h3>
+        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <input type="text" id="new-title" placeholder="ชื่อคอร์ส"
+                style="flex: 1; padding: 10px; border-radius: 5px; border: 1px solid #ccc;">
+            <input type="text" id="new-desc" placeholder="รายละเอียดสั้นๆ"
+                style="flex: 2; padding: 10px; border-radius: 5px; border: 1px solid #ccc;">
+            <button onclick="addNewCourse()"
+                style="padding: 10px 20px; background: #03a9f4; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">+
+                เพิ่มคอร์ส</button>
+        </div>
+    </div>
     <div style="text-align: center; margin: 20px;">
         <input type="text" id="search-input" placeholder="ค้นหาคอร์สเรียน..."
             style="padding: 10px; width: 300px; border-radius: 5px; border: 1px solid #ddd;">
@@ -201,24 +214,24 @@
         </div>
     </div>
 
-<script>
-    // 1. คลังข้อมูล (Data)
-    const courses = [
-        { title: "Luna Online", description: "เริ่มต้นเรียนรู้ HTML, CSS และ JS ตั้งแต่ศูนย์", image: "images/logo.png" },
-        { title: "คอร์สพื้นฐาน HTML", description: "เรียนรู้วิธีการวางโครงสร้างเว็บไซต์ด้วย HTML5", image: "images/logo.png" },
-        { title: "คอร์สตกแต่งด้วย CSS", description: "เปลี่ยนเว็บจืดๆ ให้สวยงามด้วย CSS3", image: "images/logo.png" },
-        { title: "คอร์ส JavaScript เบื้องต้น", description: "ใส่หัวใจให้เว็บขยับได้ด้วย Logic", image: "images/logo.png" },
-        { title: "คอร์ส Web Admin มือโปร", description: "รวมเทคนิคการจัดการเว็บไซต์", image: "images/logo.png" },
-        { title: "คอร์สการใช้ GitHub", description: "รวมเทคนิคการจัดการ GitHub", image: "images/logo.png" }
-    ];
+    <script>
+        // 1. คลังข้อมูล (Data)
+        const courses = [
+            { title: "Luna Online", description: "เริ่มต้นเรียนรู้ HTML, CSS และ JS ตั้งแต่ศูนย์", image: "images/logo.png" },
+            { title: "คอร์สพื้นฐาน HTML", description: "เรียนรู้วิธีการวางโครงสร้างเว็บไซต์ด้วย HTML5", image: "images/logo.png" },
+            { title: "คอร์สตกแต่งด้วย CSS", description: "เปลี่ยนเว็บจืดๆ ให้สวยงามด้วย CSS3", image: "images/logo.png" },
+            { title: "คอร์ส JavaScript เบื้องต้น", description: "ใส่หัวใจให้เว็บขยับได้ด้วย Logic", image: "images/logo.png" },
+            { title: "คอร์ส Web Admin มือโปร", description: "รวมเทคนิคการจัดการเว็บไซต์", image: "images/logo.png" },
+            { title: "คอร์สการใช้ GitHub", description: "รวมเทคนิคการจัดการ GitHub", image: "images/logo.png" }
+        ];
 
-    // 2. ฟังก์ชันแสดง Card (Render)
-    function renderCourses(data) {
-        const container = document.getElementById('course-container');
-        if (!container) return; 
-        container.innerHTML = '';
-        data.forEach(course => {
-            container.innerHTML += `
+        // 2. ฟังก์ชันแสดง Card (Render)
+        function renderCourses(data) {
+            const container = document.getElementById('course-container');
+            if (!container) return;
+            container.innerHTML = '';
+            data.forEach(course => {
+                container.innerHTML += `
                 <div class="card">
                     <img src="${course.image}" class="card-img">
                     <div class="card-content">
@@ -228,67 +241,97 @@
                         <p class="message-text"></p>
                     </div>
                 </div>`;
+            });
+        }
+
+        // 3. ฟังก์ชันตรวจสอบฟอร์ม (Form Validation) - เช็คตรงนี้เลย!
+        function submitForm() {
+            const nameValue = document.getElementById('user-name').value;
+            const emailInput = document.getElementById('user-email');
+            const nameError = document.getElementById('name-error');
+            const emailError = document.getElementById('email-error');
+
+            let isValid = true;
+
+            // เช็คชื่อ
+            if (nameValue.trim() === "") {
+                nameError.style.display = 'block';
+                isValid = false;
+            } else {
+                nameError.style.display = 'none';
+            }
+
+            // เช็คอีเมล (ต้องมี @)
+            if (!emailInput.value.includes('@')) {
+                emailError.style.display = 'block';
+                isValid = false;
+            } else {
+                emailError.style.display = 'none';
+            }
+
+            if (isValid) {
+                alert("ขอบคุณครับคุณ " + nameValue + " เราได้รับข้อมูลแล้ว!");
+                document.getElementById('user-name').value = '';
+                emailInput.value = '';
+            }
+        }
+        function addNewCourse() {
+            // 1. ดึงค่าจากช่อง Input ของ Admin
+            const titleInput = document.getElementById('new-title');
+            const descInput = document.getElementById('new-desc');
+
+            // ตรวจสอบว่ากรอกข้อมูลครบไหม
+            if (titleInput.value.trim() === "" || descInput.value.trim() === "") {
+                alert("กรุณากรอกข้อมูลคอร์สให้ครบถ้วนก่อนครับ");
+                return;
+            }
+
+            // 2. สร้าง Object คอร์สใหม่
+            const newCourse = {
+                title: titleInput.value,
+                description: descInput.value,
+                image: "images/logo.png" // ใช้รูป Default ไปก่อน
+            };
+
+            // 3. ใส่ข้อมูลใหม่เข้าไปใน Array 'courses' (ตัวแปรหลักของเรา)
+            courses.push(newCourse);
+
+            // 4. สั่งให้วาดหน้าจอใหม่ (Re-render) เพื่อโชว์ Card ที่เพิ่งเพิ่ม
+            renderCourses(courses);
+
+            // 5. ล้างค่าในช่อง Input ให้พร้อมพิมพ์คอร์สถัดไป
+            titleInput.value = '';
+            descInput.value = '';
+
+            console.log("คอร์สล่าสุดที่เพิ่ม:", newCourse);
+            console.log("จำนวนคอร์สทั้งหมดตอนนี้:", courses.length);
+        }
+        // 4. ฟังก์ชันเสริมอื่นๆ
+        function welcome(btn) {
+            const msg = btn.parentElement.querySelector('.message-text');
+            msg.innerText = "เลือกคอร์สแล้ว!";
+            msg.style.color = "#2ecc71";
+            btn.style.backgroundColor = '#2ecc71';
+        }
+
+        function evadeMouse(btn) {
+            const x = Math.random() * (window.innerWidth - btn.clientWidth);
+            const y = Math.random() * (window.innerHeight - btn.clientHeight);
+            btn.style.position = 'absolute';
+            btn.style.left = x + 'px';
+            btn.style.top = y + 'px';
+        }
+
+        // 5. ระบบค้นหา (Search)
+        document.getElementById('search-input').addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase();
+            const filtered = courses.filter(c => c.title.toLowerCase().includes(term));
+            renderCourses(filtered);
         });
-    }
 
-    // 3. ฟังก์ชันตรวจสอบฟอร์ม (Form Validation) - เช็คตรงนี้เลย!
-    function submitForm() {
-        const nameValue = document.getElementById('user-name').value;
-        const emailInput = document.getElementById('user-email');
-        const nameError = document.getElementById('name-error');
-        const emailError = document.getElementById('email-error');
-
-        let isValid = true;
-
-        // เช็คชื่อ
-        if (nameValue.trim() === "") {
-            nameError.style.display = 'block';
-            isValid = false;
-        } else {
-            nameError.style.display = 'none';
-        }
-
-        // เช็คอีเมล (ต้องมี @)
-        if (!emailInput.value.includes('@')) {
-            emailError.style.display = 'block';
-            isValid = false;
-        } else {
-            emailError.style.display = 'none';
-        }
-
-        if (isValid) {
-            alert("ขอบคุณครับคุณ " + nameValue + " เราได้รับข้อมูลแล้ว!");
-            document.getElementById('user-name').value = '';
-            emailInput.value = '';
-        }
-    }
-
-    // 4. ฟังก์ชันเสริมอื่นๆ
-    function welcome(btn) {
-        const msg = btn.parentElement.querySelector('.message-text');
-        msg.innerText = "เลือกคอร์สแล้ว!";
-        msg.style.color = "#2ecc71";
-        btn.style.backgroundColor = '#2ecc71';
-    }
-
-    function evadeMouse(btn) {
-        const x = Math.random() * (window.innerWidth - btn.clientWidth);
-        const y = Math.random() * (window.innerHeight - btn.clientHeight);
-        btn.style.position = 'absolute';
-        btn.style.left = x + 'px';
-        btn.style.top = y + 'px';
-    }
-
-    // 5. ระบบค้นหา (Search)
-    document.getElementById('search-input').addEventListener('input', (e) => {
-        const term = e.target.value.toLowerCase();
-        const filtered = courses.filter(c => c.title.toLowerCase().includes(term));
-        renderCourses(filtered);
-    });
-
-    // สั่งรันครั้งแรก
-    renderCourses(courses);
-</script>
+        // สั่งรันครั้งแรก
+        renderCourses(courses);
+    </script>
     <hr style="margin: 50px 0;">
     <div id="enrollment-form"
         style="max-width: 400px; margin: 0 auto; padding: 20px; background: #f9f9f9; border-radius: 10px;">
