@@ -131,24 +131,14 @@
 <body>
     <h1>Web-Hawk</h1>
     <p>Welcome na Bro</p>
-    <a href="https://www.google.com" target="_blank"><button class="btn-signup">Click สิวะ</button></a>
+    <a href="https://www.google.com" target="_blank"><button class="btn-signup" id="evasiveButton" onmouseover="evadeMouse(this)">Click สิวะ</button></a>
     <img src="images/discord_icon_130958.png" alt="Girl in a jacket" width="30" height="30">
-
-    <div class="card">
-    <img src="images/logo.png" alt="Course Thumbnail" class="card-img">
-    <div class="card-content">
-        <h2 class="card-title">คอร์สพื้นฐานการเขียนเว็บ</h2>
-        <p class="card-text">เริ่มต้นเรียนรู้ HTML, CSS และ JS ตั้งแต่ศูนย์จนเป็นมือโปร พร้อมโปรเจกต์ทำจริง</p>
-        <button class="btn-signup" onclick="welcome(this)">สมัครเรียนเลย</button>
-        <p class="message-text"></p>
-    </div>
-</div>
 
 <div class="container">
     <div class="card"> 
         <img src="images/logo.png" alt="Course Thumbnail" class="card-img">
     <div class="card-content">
-        <h2 class="card-title">คอร์สพื้นฐานการเขียนเว็บ</h2>
+        <h2 class="card-title">Luna Online</h2>
         <p class="card-text">เริ่มต้นเรียนรู้ HTML, CSS และ JS ตั้งแต่ศูนย์จนเป็นมือโปร พร้อมโปรเจกต์ทำจริง</p>
         <button class="btn-signup" onclick="welcome(this)">สมัครเรียนเลย</button>
         <p class="message-text"></p>
@@ -157,7 +147,7 @@
     <div class="card"> 
             <img src="images/logo.png" alt="Course Thumbnail" class="card-img">
     <div class="card-content">
-        <h2 class="card-title">คอร์สพื้นฐานการเขียนเว็บ</h2>
+        <h2 class="card-title">LunaPlus</h2>
         <p class="card-text">เริ่มต้นเรียนรู้ HTML, CSS และ JS ตั้งแต่ศูนย์จนเป็นมือโปร พร้อมโปรเจกต์ทำจริง</p>
         <button class="btn-signup" onclick="welcome(this)">สมัครเรียนเลย</button>
         <p class="message-text"></p>
@@ -165,7 +155,7 @@
  </div>
     <div class="card">     <img src="images/logo.png" alt="Course Thumbnail" class="card-img">
     <div class="card-content">
-        <h2 class="card-title">คอร์สพื้นฐานการเขียนเว็บ</h2>
+        <h2 class="card-title">Valorant</h2>
         <p class="card-text">เริ่มต้นเรียนรู้ HTML, CSS และ JS ตั้งแต่ศูนย์จนเป็นมือโปร พร้อมโปรเจกต์ทำจริง</p>
         <button class="btn-signup" onclick="welcome(this)">สมัครเรียนเลย</button>
         <p class="message-text"></p>
@@ -191,6 +181,22 @@ function welcome(theButton) { // รับปุ่มที่กดมาใ�
     theButton.style.backgroundColor = '#2ecc71';
     theButton.innerText = 'กำลังไป...';
     }
+   function evadeMouse(button) {
+        // จำกัดพื้นที่การขยับ เพื่อไม่ให้ปุ่มหนีไปนอกจอ
+        let screenWidth = window.innerWidth - button.clientWidth;
+        let screenHeight = window.innerHeight - button.clientHeight;
+
+        // สุ่มตำแหน่งใหม่ (X, Y)
+        let newX = Math.random() * screenWidth;
+        let newY = Math.random() * screenHeight;
+
+        // สั่งให้ปุ่มเปลี่ยนตำแหน่ง
+        button.style.position = 'absolute'; // สำคัญ! ต้องตั้งเป็น absolute เพื่อให้ขยับได้อิสระ
+        // เพิ่มบรรทัดนี้ครับ เพื่อให้ปุ่มอยู่ชั้นบนสุดเสมอ
+    button.style.zIndex = '9999';
+        button.style.left = newX + 'px';
+        button.style.top = newY + 'px';
+    } 
 </script>
 </body>
 </html>
